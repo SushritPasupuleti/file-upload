@@ -8,6 +8,8 @@ require("./model")
 const File = mongoose.model("file");
 const router = express.Router();
 
+app.use(express.static(path.join(__dirname, "./public/")));
+
 const storage = multer.diskStorage({
    destination: "./public/",
    filename: function(req, file, cb){
@@ -21,7 +23,7 @@ const upload = multer({
 }).single("myfile");
 
 const obj =(req,res) => {
-   console.log("nigga")
+   console.log("Incoming File")
    upload(req, res, () => {
       console.log("Request ---", req.body);
       console.log("Request file ---", req.file);//Here you get file.
@@ -49,5 +51,5 @@ mongoose.connect("mongodb://localhost/file-upload",{
 }).then(()=>{console.log("DB is connected")})
 
 app.listen(PORT,()=>{
-   console.log("\u{1F525}\u{1F680} app listen on port",PORT,"\u{1F525}\u{1F680}")
+   console.log("🚀 server listening on port",PORT)
 });
